@@ -1,18 +1,17 @@
 <?php
 
+use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
+}); */
+
+Route::resource('characters', CharacterController::class)->parameters(['characters'=> 'character'])->names('character');
+Route::get('charactersave',[CharacterController::class, 'save'])->name('character.save');
+Route::controller(LocationController::class)->group(function(){
+    Route::get('locations', 'index')->name('location.index');
+    Route::get('locations/{id}', 'show')->name('location.show');
 });
